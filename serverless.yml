@@ -1,0 +1,206 @@
+service: lms-upmyranks
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+  vpc:
+    securityGroupIds:
+      - sg-00ea446195c6de4c5
+    subnetIds:
+      - subnet-04a418dd5a82c6a71
+
+functions:
+  testFunction:
+    handler: src/functions/index.handler
+    events:
+      - http:
+          path: /test
+          method: get
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+  addInstitute:
+    handler: src/functions/institute.createHandler
+    events:
+      - http:
+          path: /institutes/
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+  getAllInstitutes:
+    handler: src/functions/institute.getAllHandler
+    events:
+      - http:
+          path: /institutes/
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60        
+  getSingleInstitute:
+    handler: src/functions/institute.getSingleHandler
+    events:
+      - http:
+          path: /institutes/{id}
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10        
+  editInstitute:
+    handler: src/functions/institute.editHandler
+    events:
+      - http:
+          path: /institutes/{id}
+          method: put
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60
+  deleteInstitute:
+    handler: src/functions/institute.deleteHandler
+    events:
+      - http:
+          path: /institutes/{id}
+          method: delete
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10  
+    addBranch:
+    handler: src/functions/branch.createHandler
+    events:
+      - http:
+          path: /branch/
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10  
+    getAllBranches:
+    handler: src/functions/branch.getAllHandler
+    events:
+      - http:
+          path: /branch/
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60        
+  getSingleBranch:
+    handler: src/functions/branch.getSingleHandler
+    events:
+      - http:
+          path: /branch/{id}
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10        
+  editBranch:
+    handler: src/functions/branch.editHandler
+    events:
+      - http:
+          path: /branch/{id}
+          method: put
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60
+  deleteBranch:
+    handler: src/functions/branch.deleteHandler
+    events:
+      - http:
+          path: /branch/{id}
+          method: delete
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 1
+    addBatch:
+    handler: src/functions/batch.createHandler
+    events:
+      - http:
+          path: /batch/
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10  
+    getAllBatches:
+    handler: src/functions/batch.getAllHandler
+    events:
+      - http:
+          path: /batch/
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60        
+  getSingleBatch:
+    handler: src/functions/batch.getSingleHandler
+    events:
+      - http:
+          path: /batch/{id}
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 10        
+  editBatch:
+    handler: src/functions/batch.editHandler
+    events:
+      - http:
+          path: /batch/{id}
+          method: put
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 60
+  deleteBatch:
+    handler: src/functions/batch.deleteHandler
+    events:
+      - http:
+          path: /batch/{id}
+          method: delete
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:ap-south-1:209039995401:userpool/ap-south-1_Is7bfmfow
+            type: COGNITO_USER_POOLS
+            identitySource: method.request.header.Authorization
+    timeout: 1
+
+plugins:
+  - serverless-offline
